@@ -10,6 +10,9 @@
   flex: 1;
   padding: 16px 20px 32px;
   overflow-y: auto;
+  /* Without this a flex item refuses to become smaller than its content.
+     The product grid would then push the cart over the products. */
+  min-width: 0;
 }
 
 /* ----- Category tabs ----- */
@@ -48,7 +51,9 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  /* min() keeps a tile from being wider than the space we actually have,
+     so the grid never sticks out of the product area. */
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
   gap: 12px;
 }
 
@@ -119,8 +124,10 @@
 /* ----- Cart ----- */
 
 .cart {
-  width: 380px;
-  flex-shrink: 0;
+  /* Stays around 380px, but may shrink to 300px on a narrow laptop
+     instead of covering the products. */
+  flex: 0 1 380px;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   background-color: var(--charcoal);
@@ -315,11 +322,11 @@
 /* Laptop and small tablet: a narrower cart. */
 @media (max-width: 1200px) {
   .cart {
-    width: 330px;
+    flex-basis: 330px;
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
   }
 }
 
@@ -337,7 +344,9 @@
   }
 
   .cart {
+    flex-basis: auto;
     width: 100%;
+    min-width: 0;
     border-left: none;
     border-top: 2px solid var(--gold);
   }
@@ -351,7 +360,7 @@
 /* Phone: smaller tiles, but the buttons stay big enough for a finger. */
 @media (max-width: 600px) {
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(120px, 100%), 1fr));
     gap: 8px;
   }
 

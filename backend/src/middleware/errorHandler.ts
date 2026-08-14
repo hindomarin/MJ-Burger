@@ -29,6 +29,11 @@ export function errorHandler(
     return res.status(error.status).json({ message: error.message });
   }
 
+  // express.json() throws this when the request body is not valid JSON.
+  if (error instanceof SyntaxError && "body" in error) {
+    return res.status(400).json({ message: "The request was not valid JSON" });
+  }
+
   // Anything we did not expect: log it for ourselves, but do not
   // show technical details to the user.
   console.error("Unexpected error:", error);
