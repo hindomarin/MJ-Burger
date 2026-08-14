@@ -43,6 +43,13 @@ export const productSchema = z.object({
 
 export const orderSchema = z.object({
   note: z.string().trim().max(200).default(""),
+  // The cashier must always choose how the customer pays.
+  paymentMethod: z.enum(["CASH", "CARD"], {
+    message: "Please choose cash or card",
+  }),
+  paymentStatus: z
+    .enum(["PAID", "PENDING", "FAILED"], { message: "Unknown payment status" })
+    .default("PENDING"),
   items: z
     .array(
       z.object({
@@ -61,6 +68,12 @@ export const orderSchema = z.object({
 export const orderStatusSchema = z.object({
   status: z.enum(["NEW", "PREPARING", "READY", "COMPLETED", "CANCELLED"], {
     message: "Unknown order status",
+  }),
+});
+
+export const paymentStatusSchema = z.object({
+  paymentStatus: z.enum(["PAID", "PENDING", "FAILED"], {
+    message: "Unknown payment status",
   }),
 });
 

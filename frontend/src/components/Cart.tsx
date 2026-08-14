@@ -1,14 +1,22 @@
 import { useCart } from "../context/CartContext";
 import { formatEuro } from "../utils/money";
+import type { PaymentMethod } from "../types";
 
 // The order that is being put together, on the right side of the POS.
 
 type Props = {
   onPlaceOrder: () => void;
   placing: boolean;
+  paymentMethod: PaymentMethod | null;
+  onChoosePayment: (method: PaymentMethod) => void;
 };
 
-export function Cart({ onPlaceOrder, placing }: Props) {
+export function Cart({
+  onPlaceOrder,
+  placing,
+  paymentMethod,
+  onChoosePayment,
+}: Props) {
   const {
     lines,
     orderNote,
@@ -106,13 +114,43 @@ export function Cart({ onPlaceOrder, placing }: Props) {
           </div>
         </div>
 
-        {/* An empty order cannot be sent. The backend refuses it as well. */}
+        {/* The cashier must pick cash or card before the order can be sent. */}
+        <div className="payment-choice">
+          <span className="payment-label">Payment</span>
+          <div className="payment-buttons">
+            <button
+              className={`btn payment-btn ${
+                paymentMethod === "CASH" ? "payment-btn-active" : ""
+              }`}
+              onClick={() => onChoosePayment("CASH")}
+              aria-pressed={paymentMethod === "CASH"}
+            >
+              Cash
+            </button>
+            <button
+              className={`btn payment-btn ${
+                paymentMethod === "CARD" ? "payment-btn-active" : ""
+              }`}
+              onClick={() => onChoosePayment("CARD")}
+              aria-pressed={paymentMethod === "CARD"}
+            >
+              Card
+            </button>
+          </div>
+        </div>
+
+        {/* An empty order or a missing payment method cannot be sent.
+            The backend refuses both as well. */}
         <button
           className="btn btn-gold place-order-btn"
           onClick={onPlaceOrder}
-          disabled={isEmpty || placing}
+          disabled={isEmpty || placing || paymentMethod === null}
         >
-          {placing ? "Placing..." : "Place order"}
+          {placing
+            ? "Placing..."
+            : paymentMethod === null
+              ? "Choose payment first"
+              : "Place order"}
         </button>
       </div>
     </aside>

@@ -276,14 +276,38 @@ tbody tr:hover {
   color: var(--red);
 }
 .badge-low {
-  color: var(--black);
   background-color: var(--red);
   border-color: var(--red);
   color: var(--white);
 }
 
+/* Payment badges */
+.badge-pay-paid {
+  color: var(--green);
+}
+.badge-pay-pending {
+  color: var(--orange);
+}
+.badge-pay-failed {
+  color: var(--red);
+}
+
 .text-muted {
   color: var(--grey-text);
+}
+
+.modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+/* Columns that are not important enough for a phone screen. */
+@media (max-width: 700px) {
+  .hide-sm {
+    display: none;
+  }
 }
 
 /* ----- Modal ----- */
@@ -334,4 +358,72 @@ tbody tr:hover {
 
 .modal-body {
   padding: 20px;
+}
+
+/* ----- Responsive ----- */
+
+/* Tablet and smaller: keep the page padding tighter so more fits. */
+@media (max-width: 900px) {
+  .page {
+    padding: 16px 16px 32px;
+  }
+
+  .page-head h2 {
+    font-size: 1.2rem;
+  }
+
+  table {
+    min-width: 520px;
+  }
+}
+
+/* Phone: forms and buttons go full width, touch targets stay big. */
+@media (max-width: 600px) {
+  .page {
+    padding: 14px 12px 28px;
+  }
+
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    min-height: 52px;
+  }
+
+  .btn {
+    min-height: 52px;
+  }
+
+  .btn-small {
+    min-height: 44px;
+  }
+
+  table {
+    min-width: 0;
+  }
+
+  th,
+  td {
+    padding: 10px 8px;
+  }
+
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: none;
+    max-height: 92vh;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
 }

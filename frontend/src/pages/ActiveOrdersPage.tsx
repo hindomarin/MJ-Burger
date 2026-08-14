@@ -3,6 +3,7 @@ import * as api from "../api/endpoints";
 import { Loading } from "../components/Loading";
 import { Message } from "../components/Message";
 import { StatusBadge } from "../components/StatusBadge";
+import { PaymentBadge } from "../components/PaymentBadge";
 import { formatEuro } from "../utils/money";
 import type { Order, OrderStatus } from "../types";
 import "./ActiveOrdersPage.css";
@@ -58,6 +59,20 @@ export function ActiveOrdersPage() {
     }
   }
 
+  // For card orders that were not confirmed yet, or that failed and
+  // were paid on a second try.
+  async function markAsPaid(order: Order) {
+    setBusyId(order.id);
+    try {
+      await api.updatePaymentStatus(order.id, "PAID");
+      await loadOrders();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Could not update");
+    } finally {
+      setBusyId(null);
+    }
+  }
+
   function formatTime(iso: string) {
     return new Date(iso).toLocaleTimeString("nl-NL", {
       hour: "2-digit",
@@ -92,7 +107,13 @@ export function ActiveOrdersPage() {
                   <StatusBadge status={order.status} />
                 </header>
 
-                <p className="order-time">{formatTime(order.createdAt)}</p>
+                <div className="order-meta">
+                  <span className="order-time">{formatTime(order.createdAt)}</span>
+                  <PaymentBadge
+                    method={order.paymentMethod}
+                    status={order.paymentStatus}
+                  />
+                </div>
 
                 <ul className="order-items">
                   {order.items.map((item) => (
@@ -111,6 +132,17 @@ export function ActiveOrdersPage() {
                 {order.note && <p className="order-note-text">Note: {order.note}</p>}
 
                 <p className="order-total">{formatEuro(order.totalCents)}</p>
+
+                {/* Money still has to come in for this order. */}
+                {order.paymentStatus !== "PAID" && (
+                  <button
+                    className="btn mark-paid-btn"
+                    onClick={() => markAsPaid(order)}
+                    disabled={busyId === order.id}
+                  >
+                    Mark as paid
+                  </button>
+                )}
 
                 <div className="order-actions">
                   {next && (

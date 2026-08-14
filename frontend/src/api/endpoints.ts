@@ -5,6 +5,8 @@ import type {
   InventoryItem,
   Order,
   OrderStatus,
+  PaymentMethod,
+  PaymentStatus,
   Product,
   User,
 } from "../types";
@@ -93,6 +95,8 @@ export function getOrderHistory(filters: {
 
 export type NewOrder = {
   note: string;
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
   items: { productId: number; quantity: number; note: string }[];
 };
 
@@ -104,6 +108,14 @@ export function updateOrderStatus(id: number, status: OrderStatus) {
   return request<Order>(`/orders/${id}/status`, {
     method: "PATCH",
     body: { status },
+  });
+}
+
+// Used when a card payment is confirmed or retried afterwards.
+export function updatePaymentStatus(id: number, paymentStatus: PaymentStatus) {
+  return request<Order>(`/orders/${id}/payment`, {
+    method: "PATCH",
+    body: { paymentStatus },
   });
 }
 

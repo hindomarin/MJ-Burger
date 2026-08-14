@@ -195,3 +195,59 @@
   color: var(--grey-text);
   white-space: nowrap;
 }
+
+/* ----- Responsive ----- */
+
+@media (max-width: 900px) {
+  .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .bar-row {
+    grid-template-columns: 52px 1fr 72px;
+    gap: 8px;
+  }
+}
+
+/* Phone: filters and row buttons stack, so nothing overflows. */
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filters input,
+  .filters select,
+  .filters .btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .row-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .thumb {
+    width: 44px;
+    height: 34px;
+  }
+
+  .bar-row {
+    grid-template-columns: 44px 1fr 66px;
+  }
+
+  .bar-amount {
+    font-size: 0.75rem;
+  }
+
+  .category-chip {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+}

@@ -35,6 +35,7 @@ router.get("/orders", requireLogin, orders.listOrders);
 router.get("/orders/:id", requireLogin, orders.getOrder);
 router.post("/orders", requireLogin, orders.createOrder);
 router.patch("/orders/:id/status", requireLogin, orders.updateOrderStatus);
+router.patch("/orders/:id/payment", requireLogin, orders.updatePaymentStatus);
 
 // Inventory and sales figures - admin only.
 router.get("/inventory", requireLogin, requireAdmin, inventory.listInventory);

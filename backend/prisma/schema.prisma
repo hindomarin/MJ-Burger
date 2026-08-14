@@ -26,6 +26,20 @@ enum OrderStatus {
   CANCELLED
 }
 
+// How the customer pays.
+enum PaymentMethod {
+  CASH
+  CARD
+}
+
+// Cash is paid straight away. Card is confirmed by hand for now:
+// the cashier looks at the card terminal and says if it worked.
+enum PaymentStatus {
+  PAID
+  PENDING
+  FAILED
+}
+
 // ----- Tables -----
 
 // The people who work in the caravan.
@@ -70,6 +84,10 @@ model Order {
   status      OrderStatus @default(NEW)
   totalCents  Int // always calculated by the backend
   note        String      @default("")
+
+  paymentMethod PaymentMethod @default(CASH)
+  paymentStatus PaymentStatus @default(PENDING)
+
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 

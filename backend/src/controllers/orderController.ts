@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { prisma } from "../db";
 import { HttpError } from "../middleware/errorHandler";
-import { orderSchema, orderStatusSchema, parseId } from "../validation/schemas";
+import {
+  orderSchema,
+  orderStatusSchema,
+  parseId,
+  paymentStatusSchema,
+} from "../validation/schemas";
 
 // Orders with these statuses are still busy and belong on the Active Orders screen.
 const ACTIVE_STATUSES = ["NEW", "PREPARING", "READY"] as const;
@@ -122,6 +127,8 @@ export async function createOrder(req: Request, res: Response) {
         orderNumber,
         totalCents,
         note: data.note,
+        paymentMethod: data.paymentMethod,
+        paymentStatus: data.paymentStatus,
         userId,
         items: { create: lines },
       },
@@ -150,6 +157,32 @@ export async function updateOrderStatus(req: Request, res: Response) {
   const updated = await prisma.order.update({
     where: { id },
     data: { status },
+    include: withItems,
+  });
+
+  res.json(updated);
+}
+
+// PATCH /api/orders/:id/payment
+// Used when a card payment is confirmed afterwards, or when a failed
+// payment is tried again. There is no payment provider yet: the cashier
+// looks at the card terminal and tells the system what happened.
+export async function updatePaymentStatus(req: Request, res: Response) {
+  const id = parseId(req.params.id);
+  const { paymentStatus } = paymentStatusSchema.parse(req.body);
+
+  const order = await prisma.order.findUnique({ where: { id } });
+  if (!order) {
+    throw new HttpError(404, "Order not found");
+  }
+
+  if (order.status === "CANCELLED") {
+    throw new HttpError(409, "This order was cancelled");
+  }
+
+  const updated = await prisma.order.update({
+    where: { id },
+    data: { paymentStatus },
     include: withItems,
   });
 

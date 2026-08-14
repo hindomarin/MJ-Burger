@@ -244,6 +244,66 @@
   color: var(--gold);
 }
 
+/* ----- Choosing cash or card ----- */
+
+.payment-choice {
+  margin-bottom: 12px;
+}
+
+.payment-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--grey-text);
+  margin-bottom: 6px;
+}
+
+.payment-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.payment-btn {
+  flex: 1;
+  min-height: 56px;
+}
+
+/* The chosen one is filled with gold, so it is obvious at a glance. */
+.payment-btn-active {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--black);
+}
+
+.payment-btn-active:hover {
+  background-color: var(--gold-dark);
+}
+
+/* ----- Card terminal window ----- */
+
+.card-amount {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 2.2rem;
+  color: var(--gold);
+  text-align: center;
+}
+
+.card-help {
+  text-align: center;
+  margin: 8px 0 20px;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-actions .btn {
+  min-height: 60px;
+}
+
 /* The most important button of the whole application. */
 .place-order-btn {
   width: 100%;
@@ -253,9 +313,9 @@
 }
 
 /* Laptop and small tablet: a narrower cart. */
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .cart {
-    width: 320px;
+    width: 330px;
   }
 
   .product-grid {
@@ -263,11 +323,17 @@
   }
 }
 
-/* Phone: the cart moves under the products. */
-@media (max-width: 760px) {
+/* Small tablet in portrait: the cart goes under the products so the
+   product grid keeps the full width. */
+@media (max-width: 900px) {
   .pos {
     flex-direction: column;
     height: auto;
+  }
+
+  .pos-products {
+    overflow-y: visible;
+    padding: 12px 16px 20px;
   }
 
   .cart {
@@ -276,7 +342,58 @@
     border-top: 2px solid var(--gold);
   }
 
+  /* Without a limit the cart would push the products off the screen. */
   .cart-lines {
-    max-height: 320px;
+    max-height: 300px;
+  }
+}
+
+/* Phone: smaller tiles, but the buttons stay big enough for a finger. */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+  }
+
+  .product-image img {
+    height: 84px;
+  }
+
+  .product-name {
+    font-size: 0.9rem;
+    padding: 8px 10px 4px;
+  }
+
+  .product-price {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .category-tab {
+    padding: 12px 16px;
+    font-size: 0.8rem;
+  }
+
+  .cart-line-controls {
+    flex-wrap: wrap;
+  }
+
+  .cart-line-note {
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .remove-btn {
+    margin-left: auto;
+  }
+
+  .cart-total-final {
+    font-size: 1.25rem;
+  }
+
+  .place-order-btn {
+    min-height: 64px;
+    font-size: 1.05rem;
   }
 }

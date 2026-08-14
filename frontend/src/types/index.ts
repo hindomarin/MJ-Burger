@@ -10,6 +10,10 @@ export type OrderStatus =
   | "COMPLETED"
   | "CANCELLED";
 
+export type PaymentMethod = "CASH" | "CARD";
+
+export type PaymentStatus = "PAID" | "PENDING" | "FAILED";
+
 export type User = {
   id: number;
   username: string;
@@ -48,6 +52,8 @@ export type Order = {
   status: OrderStatus;
   totalCents: number;
   note: string;
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
   createdAt: string;
   updatedAt: string;
   userId: number;

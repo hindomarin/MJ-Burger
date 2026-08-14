@@ -87,6 +87,8 @@ const ORDERS = [
   {
     orderNumber: 101,
     status: "COMPLETED" as const,
+    paymentMethod: "CASH" as const,
+    paymentStatus: "PAID" as const,
     hoursAgo: 72,
     note: "",
     items: [
@@ -98,6 +100,8 @@ const ORDERS = [
   {
     orderNumber: 102,
     status: "COMPLETED" as const,
+    paymentMethod: "CARD" as const,
+    paymentStatus: "PAID" as const,
     hoursAgo: 48,
     note: "",
     items: [
@@ -109,6 +113,8 @@ const ORDERS = [
   {
     orderNumber: 103,
     status: "CANCELLED" as const,
+    paymentMethod: "CARD" as const,
+    paymentStatus: "FAILED" as const,
     hoursAgo: 26,
     note: "Customer left",
     items: [{ product: "Crispy Chicken Burger", quantity: 1 }],
@@ -116,6 +122,8 @@ const ORDERS = [
   {
     orderNumber: 104,
     status: "COMPLETED" as const,
+    paymentMethod: "CASH" as const,
+    paymentStatus: "PAID" as const,
     hoursAgo: 3,
     note: "",
     items: [
@@ -128,6 +136,8 @@ const ORDERS = [
   {
     orderNumber: 105,
     status: "PREPARING" as const,
+    paymentMethod: "CARD" as const,
+    paymentStatus: "PENDING" as const,
     hoursAgo: 1,
     note: "No onions please",
     items: [
@@ -138,6 +148,8 @@ const ORDERS = [
   {
     orderNumber: 106,
     status: "NEW" as const,
+    paymentMethod: "CASH" as const,
+    paymentStatus: "PAID" as const,
     hoursAgo: 0,
     note: "",
     items: [
@@ -230,6 +242,8 @@ async function main() {
         orderNumber: order.orderNumber,
         status: order.status,
         note: order.note,
+        paymentMethod: order.paymentMethod,
+        paymentStatus: order.paymentStatus,
         totalCents,
         createdAt,
         updatedAt: createdAt,

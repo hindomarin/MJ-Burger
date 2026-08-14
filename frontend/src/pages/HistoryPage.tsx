@@ -4,6 +4,7 @@ import { Loading } from "../components/Loading";
 import { Message } from "../components/Message";
 import { Modal } from "../components/Modal";
 import { StatusBadge } from "../components/StatusBadge";
+import { PaymentBadge } from "../components/PaymentBadge";
 import { formatEuro } from "../utils/money";
 import type { Order } from "../types";
 import "./AdminPages.css";
@@ -109,8 +110,9 @@ export function HistoryPage() {
               <tr>
                 <th>Order</th>
                 <th>Date and time</th>
-                <th>Products</th>
+                <th className="hide-sm">Products</th>
                 <th>Status</th>
+                <th className="hide-sm">Payment</th>
                 <th>Total</th>
                 <th></th>
               </tr>
@@ -120,13 +122,19 @@ export function HistoryPage() {
                 <tr key={order.id}>
                   <td className="price-cell">#{order.orderNumber}</td>
                   <td>{formatDateTime(order.createdAt)}</td>
-                  <td>
+                  <td className="hide-sm">
                     {order.items
                       .map((item) => `${item.quantity}× ${item.productName}`)
                       .join(", ")}
                   </td>
                   <td>
                     <StatusBadge status={order.status} />
+                  </td>
+                  <td className="hide-sm">
+                    <PaymentBadge
+                      method={order.paymentMethod}
+                      status={order.paymentStatus}
+                    />
                   </td>
                   <td className="price-cell">{formatEuro(order.totalCents)}</td>
                   <td>
@@ -150,8 +158,12 @@ export function HistoryPage() {
           onClose={() => setSelected(null)}
         >
           <p className="text-muted">{formatDateTime(selected.createdAt)}</p>
-          <p style={{ margin: "10px 0" }}>
+          <p className="modal-badges">
             <StatusBadge status={selected.status} />
+            <PaymentBadge
+              method={selected.paymentMethod}
+              status={selected.paymentStatus}
+            />
           </p>
 
           <table>

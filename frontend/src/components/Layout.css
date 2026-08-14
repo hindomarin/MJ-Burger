@@ -120,3 +120,34 @@
     margin-left: auto;
   }
 }
+
+/* Phone: hide the tagline and the role chip, keep the nav scrollable. */
+@media (max-width: 600px) {
+  .topbar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    font-size: 0.85rem;
+  }
+
+  .brand-tagline,
+  .user-role {
+    display: none;
+  }
+
+  .main-nav a {
+    padding: 12px 14px;
+    font-size: 0.78rem;
+  }
+
+  .user-name {
+    font-size: 0.85rem;
+  }
+}

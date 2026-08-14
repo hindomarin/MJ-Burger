@@ -163,11 +163,44 @@ Two choices worth explaining:
 | GET    | `/api/orders/:id`          | logged in |
 | POST   | `/api/orders`              | logged in |
 | PATCH  | `/api/orders/:id/status`   | logged in |
+| PATCH  | `/api/orders/:id/payment`  | logged in |
 | GET    | `/api/inventory`           | admin   |
 | POST   | `/api/inventory`           | admin   |
 | PUT    | `/api/inventory/:id`       | admin   |
 | DELETE | `/api/inventory/:id`       | admin   |
 | GET    | `/api/stats/dashboard`     | admin   |
+
+## Payment
+
+Every order stores **how** the customer paid and **whether** the money arrived.
+
+| Field           | Values                    |
+| --------------- | ------------------------- |
+| `paymentMethod` | `CASH`, `CARD`            |
+| `paymentStatus` | `PAID`, `PENDING`, `FAILED` |
+
+The cashier must choose cash or card before PLACE ORDER can be pressed.
+
+- **Cash** is handed over at the counter, so the order is saved as `PAID` right away.
+- **Card** goes through the caravan's own card terminal. There is no payment
+  provider connected yet, so the POS asks the cashier what the terminal said:
+  *Payment successful* (`PAID`), *Confirm later* (`PENDING`) or *Payment failed* (`FAILED`).
+
+Orders that are not paid yet show a **Mark as paid** button in Active Orders,
+for a card payment that is confirmed or retried afterwards.
+
+## Screen sizes
+
+The POS is made for a tablet first, but every screen adapts:
+
+| Width           | What changes                                                   |
+| --------------- | -------------------------------------------------------------- |
+| above 1200px    | POS with products left and a fixed cart on the right            |
+| up to 1200px    | narrower cart, smaller product tiles                            |
+| up to 900px     | cart moves under the products, top bar wraps, tables scroll     |
+| up to 600px     | one order card per row, filters and buttons full width, phone menu |
+
+Buttons stay at least 44–52px high everywhere, so they are easy to tap.
 
 ## How an order is placed
 
