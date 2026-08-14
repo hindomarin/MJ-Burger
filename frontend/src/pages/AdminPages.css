@@ -1,0 +1,197 @@
+/* Shared styling for History, Menu, Stock and Sales. */
+
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filters input,
+.filters select {
+  width: auto;
+  min-width: 170px;
+  flex: 0 1 auto;
+}
+
+.filters input:first-child {
+  flex: 1 1 260px;
+}
+
+.history-modal-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--gold);
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.history-modal-total strong {
+  color: var(--gold);
+}
+
+/* ----- Small image in the menu table ----- */
+
+.thumb {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  display: block;
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.unavailable-row td {
+  opacity: 0.5;
+}
+
+/* ----- Categories block on the menu page ----- */
+
+.category-manager {
+  margin-top: 32px;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.category-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--charcoal);
+  border: 1px solid var(--line);
+  padding: 8px 8px 8px 14px;
+}
+
+.category-chip strong {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+}
+
+/* ----- Sales dashboard ----- */
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background-color: var(--charcoal);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  padding: 18px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--grey-text);
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  display: block;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.sales-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .sales-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-title {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+/* Simple bar chart made with plain CSS, no chart library needed. */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 80px;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-day {
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  text-transform: uppercase;
+}
+
+.bar-track {
+  background-color: var(--charcoal-light);
+  height: 24px;
+}
+
+.bar-fill {
+  background-color: var(--gold);
+  height: 100%;
+  min-width: 2px;
+}
+
+.bar-amount {
+  text-align: right;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.best-sellers {
+  list-style: none;
+}
+
+.best-sellers li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.best-sellers .rank {
+  color: var(--gold);
+  font-family: "Arial Black", Arial, sans-serif;
+  margin-right: 12px;
+}
+
+.best-seller-count {
+  color: var(--grey-text);
+  white-space: nowrap;
+}
