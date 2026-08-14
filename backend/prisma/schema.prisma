@@ -1,0 +1,108 @@
+// Database schema for MJ Juicy Burger.
+// After changing this file run: npm run db:migrate
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ----- Enums (a fixed list of allowed values) -----
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum OrderStatus {
+  NEW
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+// ----- Tables -----
+
+// The people who work in the caravan.
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String // bcrypt hash, never the real password
+  role         Role     @default(STAFF)
+  createdAt    DateTime @default(now())
+
+  orders Order[]
+}
+
+// Groups on the POS screen: Burgers, Sides, Drinks, Sauces, Extras.
+model Category {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  sortOrder Int    @default(0) // decides the order of the tabs
+
+  products Product[]
+}
+
+// Everything that can be sold.
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String  @default("")
+  priceCents  Int // 850 means EUR 8,50
+  imageUrl    String  @default("")
+  available   Boolean @default(true)
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  orderItems OrderItem[]
+}
+
+// One order placed at the counter.
+model Order {
+  id          Int         @id @default(autoincrement())
+  orderNumber Int         @unique // the number the customer sees, starts at 101
+  status      OrderStatus @default(NEW)
+  totalCents  Int // always calculated by the backend
+  note        String      @default("")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  items OrderItem[]
+}
+
+// One line inside an order, for example "2x Cheese Burger".
+model OrderItem {
+  id       Int @id @default(autoincrement())
+  quantity Int
+
+  // Copied from the product when the order is placed, so an old order
+  // keeps its original name and price even if the menu changes later.
+  productName    String
+  unitPriceCents Int
+
+  note String @default("") // for example "no onions"
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+// Simple stock list: how much of each ingredient is left.
+model Inventory {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  quantity    Float
+  unit        String // kg, pcs, L
+  minQuantity Float // below this amount we show LOW STOCK
+}

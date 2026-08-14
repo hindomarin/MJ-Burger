@@ -1,0 +1,8 @@
+<!-- Placeholder product photo. Replace with real MJ Juicy Burger photos. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <rect width="200" height="150" fill="#262626" />
+  <path d="M60 62 Q100 38 140 62 Z" fill="#C9A227" />
+  <rect x="60" y="68" width="80" height="8" fill="#8a6f1c" />
+  <rect x="60" y="80" width="80" height="10" fill="#5a3a1e" />
+  <path d="M60 96 Q100 118 140 96 Z" fill="#C9A227" />
+</svg>

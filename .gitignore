@@ -9,6 +9,9 @@ node_modules/
 dist/
 build/
 
+# Prisma client code, generated from schema.prisma
+backend/src/generated/
+
 # Logs
 *.log
 npm-debug.log*
