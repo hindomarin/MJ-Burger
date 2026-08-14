@@ -1,0 +1,84 @@
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--charcoal);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  padding: 16px;
+}
+
+.order-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.order-number {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 1.8rem;
+  color: var(--gold);
+}
+
+.order-time {
+  color: var(--grey-text);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.order-items {
+  list-style: none;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.order-items li {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.order-item-qty {
+  font-weight: bold;
+  color: var(--gold);
+  min-width: 32px;
+}
+
+.order-item-note {
+  color: var(--grey-text);
+  font-style: italic;
+}
+
+.order-note-text {
+  color: var(--grey-text);
+  font-size: 0.85rem;
+  border-left: 3px solid var(--gold);
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.order-total {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 1.3rem;
+  margin: auto 0 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+/* Large buttons so they are easy to hit while working. */
+.order-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.order-actions .btn {
+  flex: 1;
+  min-height: 60px;
+}
