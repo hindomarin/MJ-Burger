@@ -1,0 +1,282 @@
+/* POS: products on the left, the order on the right.
+   Only the two columns scroll, never the whole page. */
+
+.pos {
+  display: flex;
+  height: 100%;
+}
+
+.pos-products {
+  flex: 1;
+  padding: 16px 20px 32px;
+  overflow-y: auto;
+}
+
+/* ----- Category tabs ----- */
+
+.category-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+
+.category-tab {
+  padding: 14px 22px;
+  background: none;
+  color: var(--grey-text);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  min-height: 52px;
+}
+
+.category-tab:hover {
+  color: var(--white);
+}
+
+.category-tab-active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ----- Product tiles ----- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: var(--charcoal);
+  border: 1px solid var(--line);
+  padding: 0 0 12px;
+  overflow: hidden;
+}
+
+.product-card:hover:not(:disabled) {
+  border-color: var(--gold);
+}
+
+.product-card:active:not(:disabled) {
+  background-color: var(--charcoal-light);
+}
+
+.product-image {
+  position: relative;
+  display: block;
+  background-color: var(--charcoal-light);
+  border-bottom: 1px solid var(--line);
+}
+
+.product-image img {
+  display: block;
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+}
+
+.product-name {
+  padding: 10px 12px 4px;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+/* The price is the most important thing to read quickly. */
+.product-price {
+  padding: 0 12px;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--gold);
+  margin-top: auto;
+}
+
+.product-unavailable {
+  opacity: 0.45;
+}
+
+.sold-out {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--red);
+  color: var(--white);
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+}
+
+/* ----- Cart ----- */
+
+.cart {
+  width: 380px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--charcoal);
+  border-left: 2px solid var(--gold);
+}
+
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-head h2 {
+  font-size: 1.1rem;
+}
+
+.cart-lines {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px;
+}
+
+.cart-empty {
+  color: var(--grey-text);
+  text-align: center;
+  padding: 40px 10px;
+}
+
+.cart-line {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-line-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.cart-line-name {
+  font-weight: bold;
+}
+
+.cart-line-price {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.cart-line-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Big square buttons, easy to hit with a finger. */
+.qty-btn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background-color: var(--charcoal-light);
+  border: 1px solid var(--line);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.qty-btn:hover {
+  background-color: var(--charcoal-hover);
+}
+
+.qty-value {
+  width: 34px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.remove-btn {
+  color: var(--red);
+}
+
+.cart-line-note {
+  padding: 10px;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.cart-bottom {
+  border-top: 1px solid var(--line);
+  padding: 14px 16px 16px;
+}
+
+.order-note {
+  margin-bottom: 12px;
+}
+
+.cart-totals {
+  margin-bottom: 12px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  color: var(--grey-text);
+}
+
+.cart-total-final {
+  color: var(--white);
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.cart-total-final span:last-child {
+  color: var(--gold);
+}
+
+/* The most important button of the whole application. */
+.place-order-btn {
+  width: 100%;
+  min-height: 72px;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+}
+
+/* Laptop and small tablet: a narrower cart. */
+@media (max-width: 1100px) {
+  .cart {
+    width: 320px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+/* Phone: the cart moves under the products. */
+@media (max-width: 760px) {
+  .pos {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .cart {
+    width: 100%;
+    border-left: none;
+    border-top: 2px solid var(--gold);
+  }
+
+  .cart-lines {
+    max-height: 320px;
+  }
+}
