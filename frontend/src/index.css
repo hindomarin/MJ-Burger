@@ -1,0 +1,48 @@
+/* MJ Juicy Burger - base styling and brand colours.
+   The real screens are built in later steps. */
+
+:root {
+  /* Brand colours */
+  --black: #0d0d0d;
+  --charcoal: #1a1a1a;
+  --charcoal-light: #262626;
+  --gold: #c9a227;
+  --white: #ffffff;
+  --grey-text: #9a9a9a;
+  --red: #c0392b;
+  --green: #3f8f4a;
+
+  --border: 1px solid #2e2e2e;
+
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings are uppercase and heavy: this is the MJ style. */
+h1,
+h2,
+h3 {
+  font-family: "Arial Black", "Segoe UI", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
