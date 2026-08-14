@@ -1,38 +1,71 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
+import { Layout } from "./components/Layout";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { LoginPage } from "./pages/LoginPage";
+import { PosPage } from "./pages/PosPage";
+import { ActiveOrdersPage } from "./pages/ActiveOrdersPage";
+import { HistoryPage } from "./pages/HistoryPage";
+import { MenuPage } from "./pages/MenuPage";
+import { SalesPage } from "./pages/SalesPage";
+import { InventoryPage } from "./pages/InventoryPage";
 
-// The address of the backend API. It comes from the .env file
-// so we can change it later without editing the code.
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+// All pages of the application and who is allowed to open them.
 
-function App() {
-  const [apiStatus, setApiStatus] = useState("Checking...");
-
-  // When the page loads, ask the backend if it is running.
-  // This is only here to prove that frontend and backend are connected.
-  useEffect(() => {
-    fetch(`${API_URL}/api/health`)
-      .then((response) => response.json())
-      .then((data) => setApiStatus(data.message))
-      .catch(() => setApiStatus("Backend not reachable"));
-  }, []);
-
+export default function App() {
   return (
-    <div className="app">
-      <header className="header">
-        <img src="/logo.svg" alt="MJ Juicy Burger" className="logo" />
-        <div>
-          <h1>MJ Juicy Burger</h1>
-          <p className="tagline">Juicy • Fresh • Premium</p>
-        </div>
-      </header>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
 
-      <main className="main">
-        <h2>Project setup complete</h2>
-        <p className="status">API: {apiStatus}</p>
-      </main>
-    </div>
+            {/* Everything below needs a login. Layout draws the top bar. */}
+            <Route
+              element={
+                <ProtectedRoute>
+                  <Layout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="/" element={<Navigate to="/pos" replace />} />
+              <Route path="/pos" element={<PosPage />} />
+              <Route path="/orders" element={<ActiveOrdersPage />} />
+              <Route path="/history" element={<HistoryPage />} />
+
+              {/* Owner only. */}
+              <Route
+                path="/menu"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <MenuPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/sales"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <SalesPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/inventory"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <InventoryPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+
+            {/* Unknown address: back to the POS. */}
+            <Route path="*" element={<Navigate to="/pos" replace />} />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
-
-export default App;
